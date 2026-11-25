@@ -57,6 +57,7 @@ nav button.active{background:var(--gold);color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;padding:18px 0 50px}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
 .card .img{height:190px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(140deg,#efe8d8,#e2d7bd);position:relative}
+.card .img img,.detail .img img{width:100%;height:100%;object-fit:cover;display:block}
 .card .img .cat{position:absolute;top:10px;left:10px;background:rgba(28,26,23,.85);color:#e8dcc0;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;padding:.3rem .6rem;border-radius:4px}
 .card .img .watch{position:absolute;top:10px;right:10px;background:#fff;border:1px solid var(--line);border-radius:50%;width:34px;height:34px;font-size:1.05rem;line-height:1}
 .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -265,20 +266,20 @@ const MIN_INCREMENT = price => price < 1000 ? 25 : price < 10000 ? 100 : price <
 const NOW = Date.now();
 const H = 3600e3;
 const SEED = [
- {id:"L01", title:"Rolex Submariner Date 41", cat:"Watches", emoji:"⌚", desc:"Stainless steel Oyster, black dial, ceramic bezel. Box & papers, serviced 2025.", start:21400, buynow:26800, bids:[{bidder:"Collector_88",amount:21400,at:NOW-5*H}], ends:NOW+26*H, seller:"Maison & Time"},
- {id:"L02", title:"Patek Philippe Calatrava 6119", cat:"Watches", emoji:"⌚", desc:"White gold, hand-wound, cream lacquered dial. Full set, 2023.", start:42300, buynow:52000, bids:[{bidder:"GenevaFan",amount:42300,at:NOW-9*H}], ends:NOW+50*H, seller:"Maison & Time"},
- {id:"L03", title:"Audemars Piguet Royal Oak 15500ST", cat:"Watches", emoji:"⌚", desc:"Grey dial, stainless steel bracelet. One owner, full set.", start:54200, buynow:68000, bids:[{bidder:"AP_Lover",amount:54200,at:NOW-3*H},{bidder:"Collector_88",amount:53500,at:NOW-8*H}], ends:NOW+74*H, seller:"Maison & Time"},
- {id:"L04", title:"1.82ct Diamond Solitaire Ring", cat:"Jewellery", emoji:"💎", desc:"Round brilliant, E colour, VS1, set in 18ct white gold. GIA certified.", start:27800, buynow:34500, bids:[{bidder:"SparkleSeeker",amount:27800,at:NOW-12*H}], ends:NOW+30*H, seller:"Maison & Time"},
- {id:"L05", title:"Tiffany & Co. Diamond Tennis Bracelet", cat:"Jewellery", emoji:"💎", desc:"5.40ct total weight, 18ct white gold. Tiffany pouch & certificate.", start:16400, buynow:21000, bids:[{bidder:"TiffanyFan",amount:16400,at:NOW-6*H}], ends:NOW+20*H, seller:"Maison & Time"},
- {id:"L06", title:"Cartier Tank Must, Large", cat:"Watches", emoji:"⌚", desc:"Steel case, Roman numerals, sapphire cabochon crown. 2024, unworn.", start:6850, buynow:8900, bids:[{bidder:"ParisTime",amount:6850,at:NOW-2*H}], ends:NOW+44*H, seller:"Maison & Time"},
- {id:"L07", title:"Sapphire & Diamond Cluster Pendant", cat:"Jewellery", emoji:"🔷", desc:"Ceylon sapphire 3.10ct with diamond halo, 18ct yellow gold chain.", start:9200, buynow:12500, bids:[{bidder:"GemHunter",amount:9200,at:NOW-15*H}], ends:NOW+58*H, seller:"Maison & Time"},
- {id:"L08", title:"Akoya Pearl Strand, 8–8.5mm", cat:"Jewellery", emoji:"⚪", desc:"Perfectly matched Akoya pearls, 18ct gold clasp. AAA grade.", start:3400, buynow:4800, bids:[{bidder:"PearlLover",amount:3400,at:NOW-4*H}], ends:NOW+16*H, seller:"Maison & Time"},
- {id:"L09", title:"Omega Speedmaster Moonwatch Professional", cat:"Watches", emoji:"⌚", desc:"Hesalite, manual wind, on bracelet. Full set, 2022.", start:7450, buynow:9800, bids:[{bidder:"MoonFan",amount:7450,at:NOW-7*H},{bidder:"Speedy",amount:7300,at:NOW-11*H}], ends:NOW+38*H, seller:"Maison & Time"},
- {id:"L10", title:"Rolex Datejust 36, Fluted Bezel", cat:"Watches", emoji:"⌚", desc:"White gold fluted bezel, champagne dial, Jubilee bracelet.", start:12800, buynow:15900, bids:[{bidder:"DJ_Collector",amount:12800,at:NOW-10*H}], ends:NOW+66*H, seller:"Maison & Time"},
- {id:"L11", title:"Emerald & Diamond Earrings, 18ct Gold", cat:"Jewellery", emoji:"💚", desc:"Colombian emeralds 2.40ct total, diamond surrounds.", start:11200, buynow:14800, bids:[{bidder:"EmeraldEye",amount:11200,at:NOW-13*H}], ends:NOW+52*H, seller:"Maison & Time"},
- {id:"L12", title:"Jaeger-LeCoultre Reverso Classic", cat:"Watches", emoji:"⌚", desc:"Stainless steel, silvered dial, manual wind. Box & papers.", start:8900, buynow:11500, bids:[{bidder:"ReversoFan",amount:8900,at:NOW-1*H}], ends:NOW+34*H, seller:"Maison & Time"},
- {id:"L13", title:"Van Cleef & Arpels Alhambra Necklace", cat:"Jewellery", emoji:"🍀", desc:"Vintage Alhambra, 10 motifs, mother-of-pearl, 18ct yellow gold.", start:19800, buynow:24500, bids:[{bidder:"AlhambraFan",amount:19800,at:NOW-18*H}], ends:NOW+80*H, seller:"Maison & Time"},
- {id:"L14", title:"TAG Heuer Carrera Chronograph", cat:"Watches", emoji:"⌚", desc:"Black dial, steel bracelet, automatic chronograph. 2023.", start:4200, buynow:5900, bids:[{bidder:"CarreraFan",amount:4200,at:NOW-5*H}], ends:NOW+12*H, seller:"Maison & Time"}
+ {id:"L01", img:"images/l01.jpg", title:"Rolex Submariner Date 41", cat:"Watches", emoji:"⌚", desc:"Stainless steel Oyster, black dial, ceramic bezel. Box & papers, serviced 2025.", start:21400, buynow:26800, bids:[{bidder:"Collector_88",amount:21400,at:NOW-5*H}], ends:NOW+26*H, seller:"Maison & Time"},
+ {id:"L02", img:"images/l02.jpg", title:"Patek Philippe Calatrava 6119", cat:"Watches", emoji:"⌚", desc:"White gold, hand-wound, cream lacquered dial. Full set, 2023.", start:42300, buynow:52000, bids:[{bidder:"GenevaFan",amount:42300,at:NOW-9*H}], ends:NOW+50*H, seller:"Maison & Time"},
+ {id:"L03", img:"images/l03.jpg", title:"Audemars Piguet Royal Oak 15500ST", cat:"Watches", emoji:"⌚", desc:"Grey dial, stainless steel bracelet. One owner, full set.", start:54200, buynow:68000, bids:[{bidder:"AP_Lover",amount:54200,at:NOW-3*H},{bidder:"Collector_88",amount:53500,at:NOW-8*H}], ends:NOW+74*H, seller:"Maison & Time"},
+ {id:"L04", img:"images/l04.jpg", title:"1.82ct Diamond Solitaire Ring", cat:"Jewellery", emoji:"💎", desc:"Round brilliant, E colour, VS1, set in 18ct white gold. GIA certified.", start:27800, buynow:34500, bids:[{bidder:"SparkleSeeker",amount:27800,at:NOW-12*H}], ends:NOW+30*H, seller:"Maison & Time"},
+ {id:"L05", img:"images/l05.jpg", title:"Tiffany & Co. Diamond Tennis Bracelet", cat:"Jewellery", emoji:"💎", desc:"5.40ct total weight, 18ct white gold. Tiffany pouch & certificate.", start:16400, buynow:21000, bids:[{bidder:"TiffanyFan",amount:16400,at:NOW-6*H}], ends:NOW+20*H, seller:"Maison & Time"},
+ {id:"L06", img:"images/l06.jpg", title:"Cartier Tank Must, Large", cat:"Watches", emoji:"⌚", desc:"Steel case, Roman numerals, sapphire cabochon crown. 2024, unworn.", start:6850, buynow:8900, bids:[{bidder:"ParisTime",amount:6850,at:NOW-2*H}], ends:NOW+44*H, seller:"Maison & Time"},
+ {id:"L07", img:"images/l07.jpg", title:"Sapphire & Diamond Cluster Pendant", cat:"Jewellery", emoji:"🔷", desc:"Ceylon sapphire 3.10ct with diamond halo, 18ct yellow gold chain.", start:9200, buynow:12500, bids:[{bidder:"GemHunter",amount:9200,at:NOW-15*H}], ends:NOW+58*H, seller:"Maison & Time"},
+ {id:"L08", img:"images/l08.jpg", title:"Akoya Pearl Strand, 8–8.5mm", cat:"Jewellery", emoji:"⚪", desc:"Perfectly matched Akoya pearls, 18ct gold clasp. AAA grade.", start:3400, buynow:4800, bids:[{bidder:"PearlLover",amount:3400,at:NOW-4*H}], ends:NOW+16*H, seller:"Maison & Time"},
+ {id:"L09", img:"images/l09.jpg", title:"Omega Speedmaster Moonwatch Professional", cat:"Watches", emoji:"⌚", desc:"Hesalite, manual wind, on bracelet. Full set, 2022.", start:7450, buynow:9800, bids:[{bidder:"MoonFan",amount:7450,at:NOW-7*H},{bidder:"Speedy",amount:7300,at:NOW-11*H}], ends:NOW+38*H, seller:"Maison & Time"},
+ {id:"L10", img:"images/l10.jpg", title:"Rolex Datejust 36, Fluted Bezel", cat:"Watches", emoji:"⌚", desc:"White gold fluted bezel, champagne dial, Jubilee bracelet.", start:12800, buynow:15900, bids:[{bidder:"DJ_Collector",amount:12800,at:NOW-10*H}], ends:NOW+66*H, seller:"Maison & Time"},
+ {id:"L11", img:"images/l11.jpg", title:"Emerald & Diamond Earrings, 18ct Gold", cat:"Jewellery", emoji:"💚", desc:"Colombian emeralds 2.40ct total, diamond surrounds.", start:11200, buynow:14800, bids:[{bidder:"EmeraldEye",amount:11200,at:NOW-13*H}], ends:NOW+52*H, seller:"Maison & Time"},
+ {id:"L12", img:"images/l12.jpg", title:"Jaeger-LeCoultre Reverso Classic", cat:"Watches", emoji:"⌚", desc:"Stainless steel, silvered dial, manual wind. Box & papers.", start:8900, buynow:11500, bids:[{bidder:"ReversoFan",amount:8900,at:NOW-1*H}], ends:NOW+34*H, seller:"Maison & Time"},
+ {id:"L13", img:"images/l13.jpg", title:"Van Cleef & Arpels Alhambra Necklace", cat:"Jewellery", emoji:"🍀", desc:"Vintage Alhambra, 10 motifs, mother-of-pearl, 18ct yellow gold.", start:19800, buynow:24500, bids:[{bidder:"AlhambraFan",amount:19800,at:NOW-18*H}], ends:NOW+80*H, seller:"Maison & Time"},
+ {id:"L14", img:"images/l14.jpg", title:"TAG Heuer Carrera Chronograph", cat:"Watches", emoji:"⌚", desc:"Black dial, steel bracelet, automatic chronograph. 2023.", start:4200, buynow:5900, bids:[{bidder:"CarreraFan",amount:4200,at:NOW-5*H}], ends:NOW+12*H, seller:"Maison & Time"}
 ];
 
 /* ================= State: shared backend when available, localStorage fallback =================
@@ -347,6 +348,7 @@ function showView(name){
 function setFilter(f, el){ filter=f; document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active")); el.classList.add("active"); renderLots(); }
 
 /* ================= Browse ================= */
+const lotImg = l => l.img ? `<img src="${l.img}" alt="${l.title}">` : (l.emoji || "");
 function renderLots(){
   const q = (document.getElementById("q").value||"").toLowerCase();
   const cat = document.getElementById("cat").value;
@@ -373,7 +375,7 @@ function renderLots(){
       : closed ? '<span class="badge closed">Closed</span>' : "";
     const urgent = !closed && l.ends - Date.now() < 24*H;
     return `<article class="card">
-      <div class="img">${l.emoji}<span class="cat">${l.cat}</span>
+      <div class="img">${lotImg(l)}<span class="cat">${l.cat}</span>
         <button class="watch" title="Watch this lot" onclick="toggleWatch('${l.id}')">${state.watchlist.includes(l.id)?"★":"☆"}</button></div>
       <div class="card-body">
         <h3>${l.title}</h3><p class="sub">${l.desc}</p>
@@ -399,7 +401,7 @@ function openLot(id){
     `<li><span>${b.bidder}</span><span>${fmt(b.amount)} · ${new Date(b.at).toLocaleString("en-AU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span></li>`).join("")
     || "<li><span>No bids yet — be the first.</span><span></span></li>";
   document.getElementById("detail").innerHTML = `<div class="detail">
-    <div class="img">${l.emoji}</div>
+    <div class="img">${lotImg(l)}</div>
     <div>
       <span class="badge">${l.cat}</span>
       <h2 style="margin-top:10px">${l.title}</h2>

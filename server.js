@@ -57,6 +57,7 @@ db.exec(`
     title TEXT NOT NULL,
     cat TEXT NOT NULL,
     emoji TEXT NOT NULL DEFAULT '⌚',
+    img TEXT NOT NULL DEFAULT '',
     description TEXT NOT NULL DEFAULT '',
     start_cents INTEGER NOT NULL,
     buynow_cents INTEGER,
@@ -98,6 +99,9 @@ db.exec(`
   );
 `);
 
+// Migration: older databases (e.g. the live Render DB) lack the img column.
+try { db.exec("ALTER TABLE listings ADD COLUMN img TEXT NOT NULL DEFAULT ''"); } catch (e) { /* column already exists */ }
+
 // ---------- Helpers ----------
 const H = 3600e3;
 const NOW = Date.now();
@@ -128,6 +132,7 @@ function lotWithBids(row) {
     title: row.title,
     cat: row.cat,
     emoji: row.emoji,
+    img: row.img || null,
     desc: row.description,
     start: toDollars(row.start_cents),
     buynow: row.buynow_cents == null ? null : toDollars(row.buynow_cents),
@@ -142,26 +147,26 @@ function lotWithBids(row) {
 
 // ---------- Seed: the same 14 lots as index.html ----------
 const SEED = [
-  { id: "L01", title: "Rolex Submariner Date 41", cat: "Watches", emoji: "⌚", desc: "Stainless steel Oyster, black dial, ceramic bezel. Box & papers, serviced 2025.", start: 21400, buynow: 26800, bids: [{ bidder: "Collector_88", amount: 21400, at: NOW - 5 * H }], ends: NOW + 26 * H },
-  { id: "L02", title: "Patek Philippe Calatrava 6119", cat: "Watches", emoji: "⌚", desc: "White gold, hand-wound, cream lacquered dial. Full set, 2023.", start: 42300, buynow: 52000, bids: [{ bidder: "GenevaFan", amount: 42300, at: NOW - 9 * H }], ends: NOW + 50 * H },
-  { id: "L03", title: "Audemars Piguet Royal Oak 15500ST", cat: "Watches", emoji: "⌚", desc: "Grey dial, stainless steel bracelet. One owner, full set.", start: 54200, buynow: 68000, bids: [{ bidder: "AP_Lover", amount: 54200, at: NOW - 3 * H }, { bidder: "Collector_88", amount: 53500, at: NOW - 8 * H }], ends: NOW + 74 * H },
-  { id: "L04", title: "1.82ct Diamond Solitaire Ring", cat: "Jewellery", emoji: "💎", desc: "Round brilliant, E colour, VS1, set in 18ct white gold. GIA certified.", start: 27800, buynow: 34500, bids: [{ bidder: "SparkleSeeker", amount: 27800, at: NOW - 12 * H }], ends: NOW + 30 * H },
-  { id: "L05", title: "Tiffany & Co. Diamond Tennis Bracelet", cat: "Jewellery", emoji: "💎", desc: "5.40ct total weight, 18ct white gold. Tiffany pouch & certificate.", start: 16400, buynow: 21000, bids: [{ bidder: "TiffanyFan", amount: 16400, at: NOW - 6 * H }], ends: NOW + 20 * H },
-  { id: "L06", title: "Cartier Tank Must, Large", cat: "Watches", emoji: "⌚", desc: "Steel case, Roman numerals, sapphire cabochon crown. 2024, unworn.", start: 6850, buynow: 8900, bids: [{ bidder: "ParisTime", amount: 6850, at: NOW - 2 * H }], ends: NOW + 44 * H },
-  { id: "L07", title: "Sapphire & Diamond Cluster Pendant", cat: "Jewellery", emoji: "🔷", desc: "Ceylon sapphire 3.10ct with diamond halo, 18ct yellow gold chain.", start: 9200, buynow: 12500, bids: [{ bidder: "GemHunter", amount: 9200, at: NOW - 15 * H }], ends: NOW + 58 * H },
-  { id: "L08", title: "Akoya Pearl Strand, 8–8.5mm", cat: "Jewellery", emoji: "⚪", desc: "Perfectly matched Akoya pearls, 18ct gold clasp. AAA grade.", start: 3400, buynow: 4800, bids: [{ bidder: "PearlLover", amount: 3400, at: NOW - 4 * H }], ends: NOW + 16 * H },
-  { id: "L09", title: "Omega Speedmaster Moonwatch Professional", cat: "Watches", emoji: "⌚", desc: "Hesalite, manual wind, on bracelet. Full set, 2022.", start: 7450, buynow: 9800, bids: [{ bidder: "MoonFan", amount: 7450, at: NOW - 7 * H }, { bidder: "Speedy", amount: 7300, at: NOW - 11 * H }], ends: NOW + 38 * H },
-  { id: "L10", title: "Rolex Datejust 36, Fluted Bezel", cat: "Watches", emoji: "⌚", desc: "White gold fluted bezel, champagne dial, Jubilee bracelet.", start: 12800, buynow: 15900, bids: [{ bidder: "DJ_Collector", amount: 12800, at: NOW - 10 * H }], ends: NOW + 66 * H },
-  { id: "L11", title: "Emerald & Diamond Earrings, 18ct Gold", cat: "Jewellery", emoji: "💚", desc: "Colombian emeralds 2.40ct total, diamond surrounds.", start: 11200, buynow: 14800, bids: [{ bidder: "EmeraldEye", amount: 11200, at: NOW - 13 * H }], ends: NOW + 52 * H },
-  { id: "L12", title: "Jaeger-LeCoultre Reverso Classic", cat: "Watches", emoji: "⌚", desc: "Stainless steel, silvered dial, manual wind. Box & papers.", start: 8900, buynow: 11500, bids: [{ bidder: "ReversoFan", amount: 8900, at: NOW - 1 * H }], ends: NOW + 34 * H },
-  { id: "L13", title: "Van Cleef & Arpels Alhambra Necklace", cat: "Jewellery", emoji: "🍀", desc: "Vintage Alhambra, 10 motifs, mother-of-pearl, 18ct yellow gold.", start: 19800, buynow: 24500, bids: [{ bidder: "AlhambraFan", amount: 19800, at: NOW - 18 * H }], ends: NOW + 80 * H },
-  { id: "L14", title: "TAG Heuer Carrera Chronograph", cat: "Watches", emoji: "⌚", desc: "Black dial, steel bracelet, automatic chronograph. 2023.", start: 4200, buynow: 5900, bids: [{ bidder: "CarreraFan", amount: 4200, at: NOW - 5 * H }], ends: NOW + 12 * H },
+  { id: "L01", img: "images/l01.jpg", title: "Rolex Submariner Date 41", cat: "Watches", emoji: "⌚", desc: "Stainless steel Oyster, black dial, ceramic bezel. Box & papers, serviced 2025.", start: 21400, buynow: 26800, bids: [{ bidder: "Collector_88", amount: 21400, at: NOW - 5 * H }], ends: NOW + 26 * H },
+  { id: "L02", img: "images/l02.jpg", title: "Patek Philippe Calatrava 6119", cat: "Watches", emoji: "⌚", desc: "White gold, hand-wound, cream lacquered dial. Full set, 2023.", start: 42300, buynow: 52000, bids: [{ bidder: "GenevaFan", amount: 42300, at: NOW - 9 * H }], ends: NOW + 50 * H },
+  { id: "L03", img: "images/l03.jpg", title: "Audemars Piguet Royal Oak 15500ST", cat: "Watches", emoji: "⌚", desc: "Grey dial, stainless steel bracelet. One owner, full set.", start: 54200, buynow: 68000, bids: [{ bidder: "AP_Lover", amount: 54200, at: NOW - 3 * H }, { bidder: "Collector_88", amount: 53500, at: NOW - 8 * H }], ends: NOW + 74 * H },
+  { id: "L04", img: "images/l04.jpg", title: "1.82ct Diamond Solitaire Ring", cat: "Jewellery", emoji: "💎", desc: "Round brilliant, E colour, VS1, set in 18ct white gold. GIA certified.", start: 27800, buynow: 34500, bids: [{ bidder: "SparkleSeeker", amount: 27800, at: NOW - 12 * H }], ends: NOW + 30 * H },
+  { id: "L05", img: "images/l05.jpg", title: "Tiffany & Co. Diamond Tennis Bracelet", cat: "Jewellery", emoji: "💎", desc: "5.40ct total weight, 18ct white gold. Tiffany pouch & certificate.", start: 16400, buynow: 21000, bids: [{ bidder: "TiffanyFan", amount: 16400, at: NOW - 6 * H }], ends: NOW + 20 * H },
+  { id: "L06", img: "images/l06.jpg", title: "Cartier Tank Must, Large", cat: "Watches", emoji: "⌚", desc: "Steel case, Roman numerals, sapphire cabochon crown. 2024, unworn.", start: 6850, buynow: 8900, bids: [{ bidder: "ParisTime", amount: 6850, at: NOW - 2 * H }], ends: NOW + 44 * H },
+  { id: "L07", img: "images/l07.jpg", title: "Sapphire & Diamond Cluster Pendant", cat: "Jewellery", emoji: "🔷", desc: "Ceylon sapphire 3.10ct with diamond halo, 18ct yellow gold chain.", start: 9200, buynow: 12500, bids: [{ bidder: "GemHunter", amount: 9200, at: NOW - 15 * H }], ends: NOW + 58 * H },
+  { id: "L08", img: "images/l08.jpg", title: "Akoya Pearl Strand, 8–8.5mm", cat: "Jewellery", emoji: "⚪", desc: "Perfectly matched Akoya pearls, 18ct gold clasp. AAA grade.", start: 3400, buynow: 4800, bids: [{ bidder: "PearlLover", amount: 3400, at: NOW - 4 * H }], ends: NOW + 16 * H },
+  { id: "L09", img: "images/l09.jpg", title: "Omega Speedmaster Moonwatch Professional", cat: "Watches", emoji: "⌚", desc: "Hesalite, manual wind, on bracelet. Full set, 2022.", start: 7450, buynow: 9800, bids: [{ bidder: "MoonFan", amount: 7450, at: NOW - 7 * H }, { bidder: "Speedy", amount: 7300, at: NOW - 11 * H }], ends: NOW + 38 * H },
+  { id: "L10", img: "images/l10.jpg", title: "Rolex Datejust 36, Fluted Bezel", cat: "Watches", emoji: "⌚", desc: "White gold fluted bezel, champagne dial, Jubilee bracelet.", start: 12800, buynow: 15900, bids: [{ bidder: "DJ_Collector", amount: 12800, at: NOW - 10 * H }], ends: NOW + 66 * H },
+  { id: "L11", img: "images/l11.jpg", title: "Emerald & Diamond Earrings, 18ct Gold", cat: "Jewellery", emoji: "💚", desc: "Colombian emeralds 2.40ct total, diamond surrounds.", start: 11200, buynow: 14800, bids: [{ bidder: "EmeraldEye", amount: 11200, at: NOW - 13 * H }], ends: NOW + 52 * H },
+  { id: "L12", img: "images/l12.jpg", title: "Jaeger-LeCoultre Reverso Classic", cat: "Watches", emoji: "⌚", desc: "Stainless steel, silvered dial, manual wind. Box & papers.", start: 8900, buynow: 11500, bids: [{ bidder: "ReversoFan", amount: 8900, at: NOW - 1 * H }], ends: NOW + 34 * H },
+  { id: "L13", img: "images/l13.jpg", title: "Van Cleef & Arpels Alhambra Necklace", cat: "Jewellery", emoji: "🍀", desc: "Vintage Alhambra, 10 motifs, mother-of-pearl, 18ct yellow gold.", start: 19800, buynow: 24500, bids: [{ bidder: "AlhambraFan", amount: 19800, at: NOW - 18 * H }], ends: NOW + 80 * H },
+  { id: "L14", img: "images/l14.jpg", title: "TAG Heuer Carrera Chronograph", cat: "Watches", emoji: "⌚", desc: "Black dial, steel bracelet, automatic chronograph. 2023.", start: 4200, buynow: 5900, bids: [{ bidder: "CarreraFan", amount: 4200, at: NOW - 5 * H }], ends: NOW + 12 * H },
 ];
 
 const seeded = db.prepare("SELECT COUNT(*) AS n FROM listings").get().n;
 if (seeded === 0) {
   const insLot = db.prepare(
-    "INSERT INTO listings (id, title, cat, emoji, description, start_cents, buynow_cents, ends, seller, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Maison & Time', ?)"
+    "INSERT INTO listings (id, title, cat, emoji, img, description, start_cents, buynow_cents, ends, seller, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Maison & Time', ?)"
   );
   const insBid = db.prepare(
     "INSERT INTO bids (listing_id, bidder, amount_cents, created) VALUES (?, ?, ?, ?)"
@@ -169,7 +174,7 @@ if (seeded === 0) {
   try {
     db.exec("BEGIN");
     for (const lot of SEED) {
-      insLot.run(lot.id, lot.title, lot.cat, lot.emoji, lot.desc, toCents(lot.start), lot.buynow == null ? null : toCents(lot.buynow), lot.ends, NOW);
+      insLot.run(lot.id, lot.title, lot.cat, lot.emoji, lot.img || "", lot.desc, toCents(lot.start), lot.buynow == null ? null : toCents(lot.buynow), lot.ends, NOW);
       for (const b of lot.bids) insBid.run(lot.id, b.bidder, toCents(b.amount), b.at);
     }
     db.exec("COMMIT");
@@ -179,6 +184,11 @@ if (seeded === 0) {
   }
   console.log(`Seeded ${SEED.length} lots.`);
 }
+// Backfill images for seed lots already in the database (e.g. the live Render DB seeded before images existed).
+try {
+  const upd = db.prepare("UPDATE listings SET img = ? WHERE id = ? AND (img IS NULL OR img = '')");
+  for (const lot of SEED) upd.run(lot.img || "", lot.id);
+} catch (e) { /* ignore backfill errors */ }
 
 // Persist settings so the API is the single source of truth for premium/PayPal.
 db.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('premiumRate', ?)").run(String(PREMIUM_RATE));
@@ -220,7 +230,7 @@ app.get("/api/listings/:id", (req, res) => {
 });
 
 app.post("/api/listings", (req, res) => {
-  const { title, cat, desc, start, buynow, hours, ends, seller } = req.body || {};
+  const { title, cat, desc, start, buynow, hours, ends, seller, img } = req.body || {};
   if (!title || !String(title).trim()) return res.status(400).json({ error: "Title is required" });
   if (!["Watches", "Jewellery"].includes(cat)) return res.status(400).json({ error: "Category must be Watches or Jewellery" });
   const startCents = toCents(start);
@@ -228,8 +238,8 @@ app.post("/api/listings", (req, res) => {
   const id = "L" + String(Date.now()).slice(-6) + Math.floor(Math.random() * 90 + 10);
   const endsMs = ends ? Number(ends) : Date.now() + (Number(hours) || 72) * H;
   db.prepare(
-    "INSERT INTO listings (id, title, cat, emoji, description, start_cents, buynow_cents, ends, seller, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-  ).run(id, String(title).trim(), cat, cat === "Watches" ? "⌚" : "💎", String(desc || "Listed by seller."), startCents, buynow ? toCents(buynow) : null, endsMs, String(seller || "You").trim() || "You", Date.now());
+    "INSERT INTO listings (id, title, cat, emoji, img, description, start_cents, buynow_cents, ends, seller, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  ).run(id, String(title).trim(), cat, cat === "Watches" ? "⌚" : "💎", String(img || ""), String(desc || "Listed by seller."), startCents, buynow ? toCents(buynow) : null, endsMs, String(seller || "You").trim() || "You", Date.now());
   const row = db.prepare("SELECT * FROM listings WHERE id = ?").get(id);
   res.status(201).json(lotWithBids(row));
 });
