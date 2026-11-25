@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison &amp; Time — Fine Watches &amp; Jewellery Auctions</title>
+<meta name="description" content="Maison & Time — a premium auction marketplace for high-value watches and jewellery. Bid, buy now, and pay securely via PayPal. A 16.5% buyer's premium applies to all lots.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#f7f3ea; --ivory-2:#efe8d8; --paper:#fffdf6; --charcoal:#1c1a17; --charcoal-2:#2b2723;
+  --gold:#b08d3e; --gold-2:#c9a85c; --gold-3:#8a6d2b; --muted:#6f675a; --line:#ddd3bd;
+  --green:#2e6b4f; --red:#9b2c2c; --shadow:0 10px 30px rgba(28,26,23,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Jost',system-ui,sans-serif;background:var(--ivory);color:var(--charcoal);line-height:1.55}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:1rem;padding:.6rem .7rem;border:1px solid var(--line);border-radius:6px;background:#fff;width:100%}
+label{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin:.7rem 0 .25rem}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+/* Header */
+header{background:var(--charcoal);color:var(--ivory);position:sticky;top:0;z-index:50;box-shadow:0 2px 18px rgba(0,0,0,.35)}
+.topbar{display:flex;align-items:center;gap:18px;padding:14px 0;flex-wrap:wrap}
+.brand{font-family:'Playfair Display',serif;font-size:1.7rem;letter-spacing:.04em;color:var(--ivory);text-decoration:none}
+.brand span{color:var(--gold-2)}
+.brand small{display:block;font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:#cbbd9a}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav button{background:none;border:none;color:#e8e0cd;padding:.55rem .8rem;font-size:.92rem;letter-spacing:.06em;border-radius:6px}
+nav button:hover{background:#33302b;color:#fff}
+nav button.active{background:var(--gold);color:#fff}
+.premium-note{font-size:.78rem;color:#cbbd9a;letter-spacing:.05em}
+/* Hero */
+.hero{background:linear-gradient(135deg,#221f1b 0%,#3a332a 55%,#1c1a17 100%);color:var(--ivory);padding:56px 0 48px;border-bottom:3px solid var(--gold)}
+.hero h1{font-size:clamp(2rem,4.5vw,3.2rem);line-height:1.12;font-weight:600}
+.hero h1 em{color:var(--gold-2);font-style:italic}
+.hero p{max-width:640px;color:#d8cfba;margin-top:14px;font-size:1.08rem;font-weight:300}
+.hero-stats{display:flex;gap:34px;margin-top:28px;flex-wrap:wrap}
+.hero-stats div b{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold-2);display:block}
+.hero-stats div span{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#b7ab8e}
+.btn{display:inline-block;background:var(--gold);color:#fff;border:none;padding:.75rem 1.5rem;border-radius:6px;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;text-decoration:none}
+.btn:hover{background:var(--gold-3)}
+.btn.ghost{background:transparent;border:1px solid var(--gold-2);color:var(--gold-2)}
+.btn.dark{background:var(--charcoal);color:var(--ivory)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+/* Toolbar */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:22px 0 6px}
+.toolbar input[type=search]{max-width:300px}
+.toolbar select{width:auto}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:var(--paper);padding:.45rem 1rem;border-radius:999px;font-size:.9rem}
+.pill.active{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal)}
+/* Lot grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;padding:18px 0 50px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.card .img{height:190px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(140deg,#efe8d8,#e2d7bd);position:relative}
+.card .img .cat{position:absolute;top:10px;left:10px;background:rgba(28,26,23,.85);color:#e8dcc0;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;padding:.3rem .6rem;border-radius:4px}
+.card .img .watch{position:absolute;top:10px;right:10px;background:#fff;border:1px solid var(--line);border-radius:50%;width:34px;height:34px;font-size:1.05rem;line-height:1}
+.card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-body h3{font-size:1.18rem;line-height:1.3}
+.card-body .sub{color:var(--muted);font-size:.9rem}
+.price{font-family:'Playfair Display',serif;font-size:1.35rem}
+.price small{font-family:'Jost',sans-serif;font-size:.8rem;color:var(--muted)}
+.total{font-size:.92rem;color:var(--charcoal-2)}
+.total b{color:var(--gold-3)}
+.count{font-size:.88rem;color:var(--muted)}
+.count.urgent{color:var(--red);font-weight:600}
+.card-body .row{margin-top:auto;display:flex;gap:8px;padding-top:10px}
+.card-body .row .btn{flex:1;text-align:center;padding:.6rem .4rem;font-size:.82rem}
+.badge{display:inline-block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;padding:.25rem .55rem;border-radius:4px;background:#e9e2cf;color:#5c4d26}
+.badge.winning{background:#dcefe4;color:var(--green)}
+.badge.outbid{background:#f7dede;color:var(--red)}
+.badge.won{background:var(--green);color:#fff}
+.badge.closed{background:#ddd;color:#555}
+/* Sections / views */
+.view{display:none}
+.view.active{display:block}
+.section{padding:26px 0 60px}
+.section h2{font-size:1.9rem;margin-bottom:6px}
+.section .lede{color:var(--muted);max-width:720px;margin-bottom:20px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 26px;box-shadow:var(--shadow);margin-bottom:20px}
+.panel h3{margin-bottom:8px}
+/* Detail */
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:760px){.detail{grid-template-columns:1fr}}
+.detail .img{height:340px;display:flex;align-items:center;justify-content:center;font-size:9rem;background:linear-gradient(140deg,#efe8d8,#e2d7bd);border-radius:12px;border:1px solid var(--line)}
+.bid-history{list-style:none;margin-top:10px}
+.bid-history li{display:flex;justify-content:space-between;border-bottom:1px solid #eee3cd;padding:.45rem 0;font-size:.94rem}
+.breakdown{width:100%;border-collapse:collapse;margin:12px 0}
+.breakdown td{padding:.5rem 0;border-bottom:1px solid #eee3cd}
+.breakdown td:last-child{text-align:right;font-weight:600}
+.breakdown tr.total td{font-size:1.15rem;border-bottom:none;color:var(--gold-3)}
+/* Orders */
+table.orders{width:100%;border-collapse:collapse}
+table.orders th,table.orders td{text-align:left;padding:.6rem .4rem;border-bottom:1px solid #eee3cd;font-size:.93rem}
+.status{padding:.2rem .55rem;border-radius:4px;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
+.status.awaiting{background:#f7ecd2;color:#7a5a12}
+.status.paid{background:#dcefe4;color:var(--green)}
+/* Footer */
+footer{background:var(--charcoal);color:#b7ab8e;padding:36px 0;margin-top:20px;font-size:.9rem}
+footer a{color:var(--gold-2)}
+.notice{background:#f7ecd2;border:1px solid #e3cd8f;color:#5c4d26;border-radius:8px;padding:12px 16px;font-size:.9rem;margin:18px 0}
+.hidden{display:none!important}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--charcoal);color:#fff;padding:.8rem 1.4rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.35);z-index:99;display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <a class="brand" href="#" onclick="showView('browse');return false;">Maison <span>&amp;</span> Time<small>Fine Watches &amp; Jewellery</small></a>
+    <nav>
+      <button data-nav="browse" class="active" onclick="showView('browse')">Browse Auctions</button>
+      <button data-nav="sell" onclick="showView('sell')">Sell an Item</button>
+      <button data-nav="my" onclick="showView('my')">My Auctions</button>
+      <button data-nav="orders" onclick="showView('orders')">Checkout &amp; Orders</button>
+      <button data-nav="about" onclick="showView('about')">About &amp; Payments</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Exceptional timepieces<br>&amp; <em>jewellery</em>, at auction.</h1>
+    <p>Fourteen curated lots of high-value watches and fine jewellery, from Rolex and Patek Philippe to diamond solitaires and Cartier. Bid with confidence — every lot shows its hammer price, the 16.5% buyer&rsquo;s premium, and the total due, up front.</p>
+    <div class="hero-stats">
+      <div><b id="stat-lots">14</b><span>Live lots</span></div>
+      <div><b id="stat-value">$0</b><span>Value at bid</span></div>
+      <div><b>16.5%</b><span>Buyer&rsquo;s premium</span></div>
+      <div><b>PayPal</b><span>Secure checkout</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <!-- BROWSE -->
+  <section id="view-browse" class="view active">
+    <div class="toolbar">
+      <input type="search" id="q" placeholder="Search lots — e.g. Rolex, diamond…" oninput="renderLots()">
+      <select id="cat" onchange="renderLots()">
+        <option value="">All categories</option><option>Watches</option><option>Jewellery</option>
+      </select>
+      <select id="sort" onchange="renderLots()">
+        <option value="ending">Ending soonest</option><option value="priceAsc">Price: low to high</option>
+        <option value="priceDesc">Price: high to low</option><option value="bids">Most bids</option>
+      </select>
+      <div class="pills">
+        <button class="pill active" data-f="all" onclick="setFilter('all',this)">All</button>
+        <button class="pill" data-f="watching" onclick="setFilter('watching',this)">Watching</button>
+        <button class="pill" data-f="winning" onclick="setFilter('winning',this)">Winning</button>
+        <button class="pill" data-f="ending" onclick="setFilter('ending',this)">Ending today</button>
+      </div>
+    </div>
+    <div class="notice">A <b>16.5% buyer&rsquo;s premium</b> applies to every lot. The total due shown on each lot is hammer price + premium. Payments are made via PayPal to the seller.</div>
+    <div class="grid" id="lot-grid"></div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="view-detail" class="view">
+    <p style="margin:20px 0 0"><a href="#" onclick="showView('browse');return false;">&larr; Back to all lots</a></p>
+    <div class="section" id="detail"></div>
+  </section>
+
+  <!-- SELL -->
+  <section id="view-sell" class="view">
+    <div class="section">
+      <h2>Sell an Item</h2>
+      <p class="lede">List your watch or piece of jewellery for auction. Set a starting bid, an optional Buy Now price, and a closing time. A 16.5% buyer&rsquo;s premium is added on top of the hammer price for the buyer — you receive the hammer price.</p>
+      <div class="panel"><form id="sell-form" onsubmit="submitListing(event)">
+        <label>Title</label><input required id="s-title" placeholder="e.g. Rolex Datejust 36, stainless steel">
+        <label>Category</label><select id="s-cat"><option>Watches</option><option>Jewellery</option></select>
+        <label>Description</label><textarea id="s-desc" rows="3" placeholder="Condition, provenance, box &amp; papers…"></textarea>
+        <label>Starting bid (AUD)</label><input required type="number" min="1" id="s-start" placeholder="500">
+        <label>Buy Now price (AUD, optional)</label><input type="number" min="1" id="s-buynow" placeholder="Leave blank for auction only">
+        <label>Closing in (hours from now)</label><input type="number" min="1" value="72" id="s-hours">
+        <label>Your name (seller)</label><input id="s-seller" placeholder="Your name">
+        <div style="margin-top:16px"><button class="btn" type="submit">List this item</button></div>
+      </form></div>
+    </div>
+  </section>
+
+  <!-- MY AUCTIONS -->
+  <section id="view-my" class="view">
+    <div class="section">
+      <h2>My Auctions</h2>
+      <p class="lede">Everything you are bidding on, watching, selling, or have won. With the backend running, this is shared live; otherwise it is stored in this browser.</p>
+      <div id="my-auctions"></div>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section id="view-orders" class="view">
+    <div class="section">
+      <h2>Checkout &amp; Orders</h2>
+      <p class="lede">Won lots and Buy Now purchases appear here. Complete checkout to get your PayPal payment link, pre-filled with the exact total due (hammer + 16.5% premium).</p>
+      <div id="orders"></div>
+      <div class="panel" id="checkout-panel" style="display:none">
+        <h3>Checkout — <span id="co-lot"></span></h3>
+        <form id="co-form" onsubmit="completeCheckout(event)">
+          <label>Full name</label><input required id="co-name">
+          <label>Delivery address</label><textarea required id="co-addr" rows="2"></textarea>
+          <label>Email</label><input required type="email" id="co-email">
+          <table class="breakdown" id="co-breakdown"></table>
+          <button class="btn" type="submit">Create order &amp; pay via PayPal</button>
+          <p style="font-size:.88rem;color:var(--muted);margin-top:10px">You will be taken to PayPal to pay the exact total due. The order is recorded here as awaiting payment until marked paid.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="view-about" class="view">
+    <div class="section">
+      <h2>About &amp; Payments</h2>
+      <div class="panel">
+        <h3>Buyer&rsquo;s premium — 16.5%</h3>
+        <p>A buyer&rsquo;s premium of 16.5% is added to the hammer price (or Buy Now price) of every lot. <b>Total due = hammer price + 16.5% premium.</b> For example, a winning bid of $10,000 carries a $1,650 premium, for a total due of $11,650.</p>
+      </div>
+      <div class="panel">
+        <h3>How payment works</h3>
+        <p>When you win a lot or use Buy Now, go to <b>Checkout &amp; Orders</b>, enter your delivery details, and you will receive a PayPal payment link pre-filled with the exact total due (AUD), the lot name and your order number. Payments go to the seller&rsquo;s PayPal account: <b>tonybornholm@gmail.com</b>.</p>
+        <p style="margin-top:8px">Your order stays marked <b>awaiting payment</b> until the seller confirms receipt and marks it paid.</p>
+      </div>
+      <div class="panel">
+        <h3>About this site</h3>
+        <p>Maison &amp; Time is an auction marketplace for fine watches and jewellery. When the shared backend is running (see the README), bids, watchlists, listings and orders are stored in a central database, so every visitor sees the same live bids. Without a backend configured, the site falls back to storing them in your own browser (localStorage) — they persist on the same device and browser, but are not shared with other visitors.</p>
+        <p style="margin-top:8px">Bids are attributed to the display name you enter when bidding. There are no user accounts yet — anyone who knows a lot is open can bid under any name, so treat bids as indicative until payment is confirmed via PayPal.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:var(--ivory)">Maison &amp; Time</b> — Fine watches &amp; jewellery auctions. Buyer&rsquo;s premium 16.5% applies to all lots. Payments via PayPal.</p>
+    <p style="margin-top:8px">Bids are shared live between all visitors when the backend is running; otherwise they are stored in your browser only.</p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= Configuration — edit these values to change the site ================= */
+const CONFIG = {
+  premiumRate: 0.165,                 // 16.5% buyer's premium
+  paypalEmail: "tonybornholm@gmail.com",
+  currency: "AUD",
+  // Shared backend: set this to your deployed server URL (e.g. "https://maison-and-time.onrender.com")
+  // and the site uses the shared API for listings, bids, watchlists and orders,
+  // so every visitor sees the same live bids. Leave it "" to run in
+  // localStorage-only mode (bids stored in each visitor's own browser).
+  // When the site is served by the backend itself (npm start), leave it "" —
+  // the backend serves this file, so same-origin requests work automatically.
+  backendUrl: ""
+};
+const PREMIUM = () => CONFIG.premiumRate;
+const fmt = n => "$" + Number(n).toLocaleString("en-AU", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const fmt0 = n => "$" + Number(n).toLocaleString("en-AU", {maximumFractionDigits: 0});
+const premiumOf = hammer => hammer * PREMIUM();
+const totalDue = hammer => hammer * (1 + PREMIUM());
+const MIN_INCREMENT = price => price < 1000 ? 25 : price < 10000 ? 100 : price < 50000 ? 250 : 500;
+
+/* ================= Seed data: 14 luxury lots ================= */
+const NOW = Date.now();
+const H = 3600e3;
+const SEED = [
+ {id:"L01", title:"Rolex Submariner Date 41", cat:"Watches", emoji:"⌚", desc:"Stainless steel Oyster, black dial, ceramic bezel. Box & papers, serviced 2025.", start:21400, buynow:26800, bids:[{bidder:"Collector_88",amount:21400,at:NOW-5*H}], ends:NOW+26*H, seller:"Maison & Time"},
+ {id:"L02", title:"Patek Philippe Calatrava 6119", cat:"Watches", emoji:"⌚", desc:"White gold, hand-wound, cream lacquered dial. Full set, 2023.", start:42300, buynow:52000, bids:[{bidder:"GenevaFan",amount:42300,at:NOW-9*H}], ends:NOW+50*H, seller:"Maison & Time"},
+ {id:"L03", title:"Audemars Piguet Royal Oak 15500ST", cat:"Watches", emoji:"⌚", desc:"Grey dial, stainless steel bracelet. One owner, full set.", start:54200, buynow:68000, bids:[{bidder:"AP_Lover",amount:54200,at:NOW-3*H},{bidder:"Collector_88",amount:53500,at:NOW-8*H}], ends:NOW+74*H, seller:"Maison & Time"},
+ {id:"L04", title:"1.82ct Diamond Solitaire Ring", cat:"Jewellery", emoji:"💎", desc:"Round brilliant, E colour, VS1, set in 18ct white gold. GIA certified.", start:27800, buynow:34500, bids:[{bidder:"SparkleSeeker",amount:27800,at:NOW-12*H}], ends:NOW+30*H, seller:"Maison & Time"},
+ {id:"L05", title:"Tiffany & Co. Diamond Tennis Bracelet", cat:"Jewellery", emoji:"💎", desc:"5.40ct total weight, 18ct white gold. Tiffany pouch & certificate.", start:16400, buynow:21000, bids:[{bidder:"TiffanyFan",amount:16400,at:NOW-6*H}], ends:NOW+20*H, seller:"Maison & Time"},
+ {id:"L06", title:"Cartier Tank Must, Large", cat:"Watches", emoji:"⌚", desc:"Steel case, Roman numerals, sapphire cabochon crown. 2024, unworn.", start:6850, buynow:8900, bids:[{bidder:"ParisTime",amount:6850,at:NOW-2*H}], ends:NOW+44*H, seller:"Maison & Time"},
+ {id:"L07", title:"Sapphire & Diamond Cluster Pendant", cat:"Jewellery", emoji:"🔷", desc:"Ceylon sapphire 3.10ct with diamond halo, 18ct yellow gold chain.", start:9200, buynow:12500, bids:[{bidder:"GemHunter",amount:9200,at:NOW-15*H}], ends:NOW+58*H, seller:"Maison & Time"},
+ {id:"L08", title:"Akoya Pearl Strand, 8–8.5mm", cat:"Jewellery", emoji:"⚪", desc:"Perfectly matched Akoya pearls, 18ct gold clasp. AAA grade.", start:3400, buynow:4800, bids:[{bidder:"PearlLover",amount:3400,at:NOW-4*H}], ends:NOW+16*H, seller:"Maison & Time"},
+ {id:"L09", title:"Omega Speedmaster Moonwatch Professional", cat:"Watches", emoji:"⌚", desc:"Hesalite, manual wind, on bracelet. Full set, 2022.", start:7450, buynow:9800, bids:[{bidder:"MoonFan",amount:7450,at:NOW-7*H},{bidder:"Speedy",amount:7300,at:NOW-11*H}], ends:NOW+38*H, seller:"Maison & Time"},
+ {id:"L10", title:"Rolex Datejust 36, Fluted Bezel", cat:"Watches", emoji:"⌚", desc:"White gold fluted bezel, champagne dial, Jubilee bracelet.", start:12800, buynow:15900, bids:[{bidder:"DJ_Collector",amount:12800,at:NOW-10*H}], ends:NOW+66*H, seller:"Maison & Time"},
+ {id:"L11", title:"Emerald & Diamond Earrings, 18ct Gold", cat:"Jewellery", emoji:"💚", desc:"Colombian emeralds 2.40ct total, diamond surrounds.", start:11200, buynow:14800, bids:[{bidder:"EmeraldEye",amount:11200,at:NOW-13*H}], ends:NOW+52*H, seller:"Maison & Time"},
+ {id:"L12", title:"Jaeger-LeCoultre Reverso Classic", cat:"Watches", emoji:"⌚", desc:"Stainless steel, silvered dial, manual wind. Box & papers.", start:8900, buynow:11500, bids:[{bidder:"ReversoFan",amount:8900,at:NOW-1*H}], ends:NOW+34*H, seller:"Maison & Time"},
+ {id:"L13", title:"Van Cleef & Arpels Alhambra Necklace", cat:"Jewellery", emoji:"🍀", desc:"Vintage Alhambra, 10 motifs, mother-of-pearl, 18ct yellow gold.", start:19800, buynow:24500, bids:[{bidder:"AlhambraFan",amount:19800,at:NOW-18*H}], ends:NOW+80*H, seller:"Maison & Time"},
+ {id:"L14", title:"TAG Heuer Carrera Chronograph", cat:"Watches", emoji:"⌚", desc:"Black dial, steel bracelet, automatic chronograph. 2023.", start:4200, buynow:5900, bids:[{bidder:"CarreraFan",amount:4200,at:NOW-5*H}], ends:NOW+12*H, seller:"Maison & Time"}
+];
+
+/* ================= State: shared backend when available, localStorage fallback =================
+   When a backend is reachable (same origin, e.g. served by `npm start`, or the
+   URL in CONFIG.backendUrl), listings, bids, watchlist and orders come from the
+   shared API, so every visitor sees the same live bids. If no backend answers,
+   the site falls back to the localStorage copy in this browser. */
+const KEY = "maison-and-time-v1";
+const VISITOR_KEY = "maison-and-time-visitor";
+let visitorId = localStorage.getItem(VISITOR_KEY);
+if (!visitorId) { visitorId = "v-" + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem(VISITOR_KEY, visitorId); }
+let apiMode = false; // true once the backend has answered successfully
+function apiBase(){ return CONFIG.backendUrl ? CONFIG.backendUrl.replace(/\/$/, "") : ""; }
+async function api(path, opts){
+  const res = await fetch(apiBase() + path, Object.assign({ headers: { "Content-Type": "application/json" } }, opts || {}));
+  if (!res.ok) { let msg = "Request failed (" + res.status + ")"; try { const e = await res.json(); if (e && e.error) msg = e.error; } catch (_) {} throw new Error(msg); }
+  return res.json();
+}
+async function syncFromApi(){
+  const settings = await api("/api/settings");
+  const lots = await api("/api/listings");
+  const watch = await api("/api/watchlist?visitorId=" + encodeURIComponent(visitorId));
+  const orders = await api("/api/orders");
+  CONFIG.premiumRate = settings.premiumRate;
+  CONFIG.paypalEmail = settings.paypalEmail;
+  CONFIG.currency = settings.currency;
+  state.lots = lots;
+  state.watchlist = watch;
+  state.orders = orders;
+  state.nextOrder = orders.length ? Math.max(...orders.map(o => o.id)) + 1 : 5001;
+  apiMode = true;
+  save(); // keep a local cache for offline fallback
+}
+let state = load();
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.lots) return s; }catch(e){}
+  return { lots: SEED, watchlist: [], myBids: {}, orders: [], nextOrder: 5001, name: "You" };
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function currentBid(lot){ return lot.bids.length ? Math.max(...lot.bids.map(b=>b.amount)) : lot.start; }
+function isClosed(lot){ return Date.now() > lot.ends; }
+function myTop(lot){ return state.myBids[lot.id]; }
+function statusOf(lot){
+  if(isClosed(lot)) return myTop(lot) && myTop(lot) >= currentBid(lot) ? "won" : "closed";
+  if(myTop(lot)) return myTop(lot) >= currentBid(lot) ? "winning" : "outbid";
+  return "live";
+}
+function countdown(ends){
+  let s = Math.max(0, Math.floor((ends - Date.now())/1000));
+  const d = Math.floor(s/86400); s%=86400; const h=Math.floor(s/3600); s%=3600; const m=Math.floor(s/60);
+  return d>0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m`;
+}
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none",3200); }
+
+/* ================= Views ================= */
+let filter = "all";
+function showView(name){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("view-"+name).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active", b.dataset.nav===name));
+  if(name==="browse") renderLots();
+  if(name==="my") renderMy();
+  if(name==="orders") renderOrders();
+  window.scrollTo({top:0});
+}
+function setFilter(f, el){ filter=f; document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active")); el.classList.add("active"); renderLots(); }
+
+/* ================= Browse ================= */
+function renderLots(){
+  const q = (document.getElementById("q").value||"").toLowerCase();
+  const cat = document.getElementById("cat").value;
+  const sort = document.getElementById("sort").value;
+  let lots = state.lots.slice();
+  if(q) lots = lots.filter(l => (l.title+" "+l.desc).toLowerCase().includes(q));
+  if(cat) lots = lots.filter(l => l.cat===cat);
+  if(filter==="watching") lots = lots.filter(l => state.watchlist.includes(l.id));
+  if(filter==="winning") lots = lots.filter(l => statusOf(l)==="winning");
+  if(filter==="ending") lots = lots.filter(l => !isClosed(l) && l.ends - Date.now() < 24*H);
+  if(sort==="priceAsc") lots.sort((a,b)=>currentBid(a)-currentBid(b));
+  if(sort==="priceDesc") lots.sort((a,b)=>currentBid(b)-currentBid(a));
+  if(sort==="bids") lots.sort((a,b)=>b.bids.length-a.bids.length);
+  if(sort==="ending") lots.sort((a,b)=>a.ends-b.ends);
+  const grid = document.getElementById("lot-grid");
+  document.getElementById("stat-lots").textContent = state.lots.filter(l=>!isClosed(l)).length;
+  document.getElementById("stat-value").textContent = fmt0(state.lots.reduce((s,l)=>s+currentBid(l),0));
+  if(!lots.length){ grid.innerHTML = "<p style='grid-column:1/-1;color:var(--muted)'>No lots match — try a different search or filter.</p>"; return; }
+  grid.innerHTML = lots.map(l=>{
+    const bid = currentBid(l), closed = isClosed(l), st = statusOf(l);
+    const badge = st==="winning" ? '<span class="badge winning">You&rsquo;re winning</span>'
+      : st==="outbid" ? '<span class="badge outbid">Outbid</span>'
+      : st==="won" ? '<span class="badge won">Won</span>'
+      : closed ? '<span class="badge closed">Closed</span>' : "";
+    const urgent = !closed && l.ends - Date.now() < 24*H;
+    return `<article class="card">
+      <div class="img">${l.emoji}<span class="cat">${l.cat}</span>
+        <button class="watch" title="Watch this lot" onclick="toggleWatch('${l.id}')">${state.watchlist.includes(l.id)?"★":"☆"}</button></div>
+      <div class="card-body">
+        <h3>${l.title}</h3><p class="sub">${l.desc}</p>
+        <p>${badge}</p>
+        <p class="price">${fmt(bid)} <small>· ${l.bids.length} bid${l.bids.length===1?"":"s"}</small></p>
+        <p class="total">+ 16.5% premium ${fmt(premiumOf(bid))} = <b>${fmt(totalDue(bid))} total due</b></p>
+        <p class="count ${urgent?"urgent":""}">${closed?"Auction closed":("Ends in "+countdown(l.ends))}</p>
+        <div class="row">
+          <button class="btn dark" onclick="openLot('${l.id}')">View lot</button>
+          ${l.buynow && !closed ? `<button class="btn ghost" style="color:var(--gold-3);border-color:var(--gold)" onclick="buyNow('${l.id}')">Buy Now ${fmt(l.buynow)}</button>` : ""}
+        </div>
+      </div></article>`;
+  }).join("");
+}
+
+/* ================= Lot detail & bidding ================= */
+let detailLot = null;
+function openLot(id){
+  detailLot = state.lots.find(l=>l.id===id); if(!detailLot) return;
+  const l = detailLot, bid = currentBid(l), closed = isClosed(l), st = statusOf(l);
+  const minBid = bid + MIN_INCREMENT(bid);
+  const hist = l.bids.slice().sort((a,b)=>b.amount-a.amount).map(b=>
+    `<li><span>${b.bidder}</span><span>${fmt(b.amount)} · ${new Date(b.at).toLocaleString("en-AU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span></li>`).join("")
+    || "<li><span>No bids yet — be the first.</span><span></span></li>";
+  document.getElementById("detail").innerHTML = `<div class="detail">
+    <div class="img">${l.emoji}</div>
+    <div>
+      <span class="badge">${l.cat}</span>
+      <h2 style="margin-top:10px">${l.title}</h2>
+      <p style="color:var(--muted)">${l.desc}</p>
+      <p style="margin-top:10px">Seller: ${l.seller} · Lot ${l.id} · ${closed?"Closed":("Ends in "+countdown(l.ends)+" — "+new Date(l.ends).toLocaleString("en-AU"))}</p>
+      <p class="price" style="margin-top:12px">${fmt(bid)} <small>current bid · ${l.bids.length} bids</small></p>
+      <table class="breakdown">
+        <tr><td>Hammer price (current bid)</td><td>${fmt(bid)}</td></tr>
+        <tr><td>Buyer&rsquo;s premium (16.5%)</td><td>${fmt(premiumOf(bid))}</td></tr>
+        <tr class="total"><td>Total due if you win</td><td>${fmt(totalDue(bid))}</td></tr>
+      </table>
+      ${closed ? `<p><b>Auction closed.</b> ${st==="won" ? "You won this lot — go to Checkout & Orders to pay." : "This lot has closed."}</p>
+        ${st==="won" ? `<button class="btn" onclick="startCheckout('${l.id}','win')">Checkout — pay ${fmt(totalDue(bid))}</button>` : ""}`
+      : `<form onsubmit="placeBid(event,'${l.id}')">
+          <label>Your display name (shown with your bid)</label>
+          <input id="bid-name" value="${state.name}" placeholder="e.g. Tony" required>
+          <label>Your bid (AUD) — minimum ${fmt(minBid)}</label>
+          <input type="number" id="bid-amount" min="${minBid}" step="1" value="${minBid}" required>
+          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn" type="submit">Place bid</button>
+            <button class="btn ghost" type="button" style="color:var(--gold-3);border-color:var(--gold)" onclick="toggleWatch('${l.id}');openLot('${l.id}')">${state.watchlist.includes(l.id)?"★ Watching":"☆ Watch this lot"}</button>
+            ${l.buynow ? `<button class="btn dark" type="button" onclick="buyNow('${l.id}')">Buy Now — ${fmt(l.buynow)} (+ premium)</button>` : ""}
+          </div></form>`}
+      <h3 style="margin-top:22px">Bid history</h3>
+      <ul class="bid-history">${hist}</ul>
+    </div></div>`;
+  showView("detail");
+}
+async function placeBid(e, id){
+  e.preventDefault();
+  const lot = state.lots.find(l=>l.id===id); if(!lot || isClosed(lot)) return;
+  const amt = Number(document.getElementById("bid-amount").value);
+  const bidder = (document.getElementById("bid-name").value || "").trim() || "You";
+  state.name = bidder;
+  const minBid = currentBid(lot) + MIN_INCREMENT(currentBid(lot));
+  if(!amt || amt < minBid){ toast("Bid must be at least " + fmt(minBid)); return; }
+  if (apiMode) {
+    try {
+      const updated = await api(`/api/listings/${id}/bids`, { method: "POST", body: JSON.stringify({ bidder, amount: amt }) });
+      const i = state.lots.findIndex(l=>l.id===id); if (i >= 0) state.lots[i] = updated;
+      state.myBids[id] = amt; save();
+      toast("Bid placed — you are the highest bidder at " + fmt(amt) + " (" + fmt(totalDue(amt)) + " incl. premium).");
+      openLot(id); renderLots();
+    } catch (err) { toast(err.message || "Could not place bid — please try again."); }
+    return;
+  }
+  lot.bids.push({bidder, amount: amt, at: Date.now()});
+  state.myBids[id] = amt; save();
+  toast("Bid placed — you are the highest bidder at " + fmt(amt) + " (" + fmt(totalDue(amt)) + " incl. premium).");
+  openLot(id); renderLots();
+}
+async function toggleWatch(id){
+  if (apiMode) {
+    try {
+      const r = await api("/api/watchlist", { method: "POST", body: JSON.stringify({ visitorId, listingId: id }) });
+      const i = state.watchlist.indexOf(id);
+      if (r.watching && i < 0) state.watchlist.push(id);
+      if (!r.watching && i >= 0) state.watchlist.splice(i, 1);
+      save(); renderLots();
+    } catch (err) { toast(err.message || "Could not update watchlist."); }
+    return;
+  }
+  const i = state.watchlist.indexOf(id);
+  if(i>=0) state.watchlist.splice(i,1); else state.watchlist.push(id);
+  save(); renderLots();
+}
+function buyNow(id){
+  const lot = state.lots.find(l=>l.id===id); if(!lot || !lot.buynow || isClosed(lot)) return;
+  startCheckout(id, "buynow");
+}
+
+/* ================= Sell ================= */
+async function submitListing(e){
+  e.preventDefault();
+  const title = document.getElementById("s-title").value.trim();
+  const payload = {
+    title,
+    cat: document.getElementById("s-cat").value,
+    desc: document.getElementById("s-desc").value.trim() || "Listed by seller.",
+    start: Number(document.getElementById("s-start").value),
+    buynow: Number(document.getElementById("s-buynow").value) || null,
+    hours: Number(document.getElementById("s-hours").value),
+    seller: document.getElementById("s-seller").value.trim() || "You"
+  };
+  if (apiMode) {
+    try {
+      const lot = await api("/api/listings", { method: "POST", body: JSON.stringify(payload) });
+      state.lots.push(lot); save();
+      document.getElementById("sell-form").reset();
+      toast("Your lot is live: " + title);
+      showView("browse");
+    } catch (err) { toast(err.message || "Could not list item — please try again."); }
+    return;
+  }
+  const lot = {
+    id: "L" + String(state.lots.length + 1).padStart(2,"0") + "-" + Date.now()%10000,
+    title, cat: payload.cat, emoji: payload.cat==="Watches"?"⌚":"💎",
+    desc: payload.desc,
+    start: payload.start,
+    buynow: payload.buynow,
+    bids: [], ends: Date.now() + payload.hours*H,
+    seller: payload.seller
+  };
+  state.lots.push(lot); save();
+  document.getElementById("sell-form").reset();
+  toast("Your lot is live: " + title);
+  showView("browse");
+}
+
+/* ================= My Auctions ================= */
+function renderMy(){
+  const el = document.getElementById("my-auctions");
+  const rows = (title, lots) => lots.length ? `<h3 style="margin:18px 0 8px">${title}</h3>` + lots.map(l=>{
+    const bid=currentBid(l);
+    return `<div class="panel" style="margin-bottom:10px"><b>${l.title}</b> — current bid ${fmt(bid)} · total due ${fmt(totalDue(bid))} · ${isClosed(l)?"Closed":("ends in "+countdown(l.ends))}
+    <div style="margin-top:8px"><button class="btn dark" onclick="openLot('${l.id}')">View lot</button></div></div>`;
+  }).join("") : "";
+  el.innerHTML =
+    rows("Winning", state.lots.filter(l=>statusOf(l)==="winning")) +
+    rows("Outbid", state.lots.filter(l=>statusOf(l)==="outbid")) +
+    rows("Watching", state.lots.filter(l=>state.watchlist.includes(l.id) && statusOf(l)!=="winning" && statusOf(l)!=="outbid")) +
+    rows("Won", state.lots.filter(l=>statusOf(l)==="won")) +
+    rows("Selling", state.lots.filter(l=>l.seller==="You")) +
+    (Object.keys(state.myBids).length===0 && state.watchlist.length===0 ? "<p style='color:var(--muted)'>You have not bid on or watched any lots yet.</p>" : "");
+}
+
+/* ================= Checkout & Orders ================= */
+let checkoutLot = null, checkoutKind = "win";
+function paypalUrl(order){
+  const p = new URLSearchParams({
+    cmd:"_xclick", business: CONFIG.paypalEmail, amount: order.total.toFixed(2),
+    currency_code: CONFIG.currency, item_name: order.lotTitle + " — Maison & Time order #" + order.id,
+    invoice: String(order.id)
+  });
+  return "https://www.paypal.com/cgi-bin/webscr?" + p.toString();
+}
+function startCheckout(id, kind){
+  const lot = state.lots.find(l=>l.id===id); if(!lot) return;
+  checkoutLot = lot; checkoutKind = kind;
+  const hammer = kind==="buynow" ? lot.buynow : currentBid(lot);
+  document.getElementById("co-lot").textContent = lot.title + (kind==="buynow" ? " (Buy Now)" : " (winning bid)");
+  document.getElementById("co-breakdown").innerHTML =
+    `<tr><td>${kind==="buynow"?"Buy Now price":"Hammer price (winning bid)"}</td><td>${fmt(hammer)}</td></tr>
+     <tr><td>Buyer&rsquo;s premium (16.5%)</td><td>${fmt(premiumOf(hammer))}</td></tr>
+     <tr class="total"><td>Total due</td><td>${fmt(totalDue(hammer))}</td></tr>`;
+  document.getElementById("checkout-panel").style.display = "block";
+  showView("orders");
+  document.getElementById("checkout-panel").scrollIntoView({behavior:"smooth"});
+}
+async function completeCheckout(e){
+  e.preventDefault();
+  const lot = checkoutLot; if(!lot) return;
+  const hammer = checkoutKind==="buynow" ? lot.buynow : currentBid(lot);
+  if (apiMode) {
+    try {
+      const order = await api("/api/orders", { method: "POST", body: JSON.stringify({
+        lotId: lot.id, kind: checkoutKind,
+        name: document.getElementById("co-name").value,
+        email: document.getElementById("co-email").value,
+        address: document.getElementById("co-addr").value
+      }) });
+      state.orders.push(order);
+      if (checkoutKind === "win") { const i = state.lots.findIndex(l=>l.id===lot.id); if (i >= 0) state.lots[i].ends = Date.now(); }
+      save();
+      document.getElementById("checkout-panel").style.display = "none";
+      renderOrders();
+      toast("Order #" + order.id + " created — pay " + fmt(order.total) + " via PayPal.");
+      window.open(order.paypal, "_blank");
+    } catch (err) { toast(err.message || "Could not create order — please try again."); }
+    return;
+  }
+  const order = {
+    id: state.nextOrder++, lotId: lot.id, lotTitle: lot.title, kind: checkoutKind,
+    hammer, premium: premiumOf(hammer), total: totalDue(hammer),
+    name: document.getElementById("co-name").value, email: document.getElementById("co-email").value,
+    address: document.getElementById("co-addr").value, status: "awaiting", created: Date.now()
+  };
+  order.paypal = paypalUrl(order);
+  state.orders.push(order);
+  if(checkoutKind==="win"){ lot.ends = Date.now(); } // close the lot once won & checked out
+  save();
+  document.getElementById("checkout-panel").style.display = "none";
+  renderOrders();
+  toast("Order #" + order.id + " created — pay " + fmt(order.total) + " via PayPal.");
+  window.open(order.paypal, "_blank");
+}
+function renderOrders(){
+  const el = document.getElementById("orders");
+  if(!state.orders.length){ el.innerHTML = "<p style='color:var(--muted)'>No orders yet. Win a lot or use Buy Now, then check out here.</p>"; return; }
+  el.innerHTML = `<table class="orders"><tr><th>Order</th><th>Lot</th><th>Total due</th><th>Status</th><th></th></tr>` +
+    state.orders.slice().reverse().map(o=>`<tr>
+      <td>#${o.id}</td><td>${o.lotTitle}<br><small>${o.kind==="buynow"?"Buy Now":"Winning bid"} · hammer ${fmt(o.hammer)} + premium ${fmt(o.premium)}</small></td>
+      <td><b>${fmt(o.total)}</b></td>
+      <td><span class="status ${o.status}">${o.status==="paid"?"Paid":"Awaiting payment"}</span></td>
+      <td>${o.status==="awaiting"
+        ? `<a class="btn" style="padding:.45rem .8rem;font-size:.8rem" href="${o.paypal}" target="_blank" rel="noopener">Pay via PayPal</a>
+           <button class="btn ghost" style="padding:.45rem .8rem;font-size:.8rem;color:var(--gold-3);border-color:var(--gold)" onclick="markPaid(${o.id})">Mark as paid</button>`
+        : "✓ Paid"}</td></tr>`).join("") + "</table>" +
+    `<p style="font-size:.88rem;color:var(--muted);margin-top:10px">PayPal payments go to <b>${CONFIG.paypalEmail}</b>. “Mark as paid” is for the seller to confirm receipt.</p>`;
+}
+async function markPaid(id){
+  if (apiMode) {
+    try {
+      const updated = await api(`/api/orders/${id}/mark-paid`, { method: "POST" });
+      const i = state.orders.findIndex(x=>x.id===id); if (i >= 0) state.orders[i] = updated;
+      save(); renderOrders(); toast("Order #" + id + " marked as paid.");
+    } catch (err) { toast(err.message || "Could not update order."); }
+    return;
+  }
+  const o = state.orders.find(x=>x.id===id); if(!o) return;
+  o.status = "paid"; save(); renderOrders(); toast("Order #" + id + " marked as paid.");
+}
+
+/* ================= Init ================= */
+(async function init(){
+  try { await syncFromApi(); } catch (e) { apiMode = false; /* no backend — localStorage mode */ }
+  renderLots();
+  // Refresh every 30s: re-sync shared bids when a backend is available,
+  // otherwise just refresh the countdowns.
+  setInterval(async () => {
+    if (apiMode || CONFIG.backendUrl) { try { await syncFromApi(); renderLots(); } catch (e) { renderLots(); } }
+    else renderLots();
+  }, 30000);
+})();
+</script>
+</body>
+</html>
